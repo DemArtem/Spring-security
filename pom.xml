@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>Basic</module>
+        <module>User-grant</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
