@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="
-http://www.thymeleaf.org
-"
-      xmlns:sec="
-https://www.thymeleaf.org/thymeleaf-extras-springsecurity5
-">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Product Manager</title>
@@ -35,31 +31,22 @@ https://www.thymeleaf.org/thymeleaf-extras-springsecurity5
             <th>Brand</th>
             <th>Made In</th>
             <th>Price</th>
-
             <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Actions</th>
 
         </tr>
         </thead>
         <tbody>
         <tr th:each="product : ${products}">
-            <td th:text="${
-product.id
-}">Product ID</td>
-            <td th:text="${
-product.name
-}">Name</td>
+            <td th:text="${product.id}">Product ID</td>
+            <td th:text="${product.name}">Name</td>
             <td th:text="${product.brand}">Brand</td>
             <td th:text="${product.madein}">Made in</td>
             <td th:text="${product.price}">Price</td>
 
             <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
-                <a th:href="@{'/edit/' + ${
-product.id
-}}">Edit</a>
+                <a th:href="@{'/edit/' + ${product.id}}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${
-product.id
-}}">Delete</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${product.id}}">Delete</a>
             </td>
         </tr>
         </tbody>

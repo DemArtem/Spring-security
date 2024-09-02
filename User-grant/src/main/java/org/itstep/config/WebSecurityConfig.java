@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -32,19 +34,23 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf(csrf -> csrf
+                .ignoringRequestMatchers(toH2Console())
+                .disable())
+                .headers(headers -> headers.frameOptions().disable())
+                .authorizeRequests()
                 .antMatchers("/").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
                 .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
                 .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
                 .antMatchers("/delete/**").hasAuthority("ADMIN")
+                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
-        ;
+                .exceptionHandling().accessDeniedPage("/403");
         return http.build();
     }
 } 
