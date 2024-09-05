@@ -46,7 +46,7 @@ public class SoftReferences {
         SoftReference<BigInt> ref1 = new SoftReference<>(big);
         big = null; //Хотя объект удален, но памяти не прибавилось
         System.out.println(Runtime.getRuntime().freeMemory());
-/*
+
         List<Long[]> list = new ArrayList<>();
 
         long i = 0;
@@ -73,8 +73,6 @@ public class SoftReferences {
             }
             System.out.println(Runtime.getRuntime().freeMemory());
         }
-
- */
     }
 }
 
